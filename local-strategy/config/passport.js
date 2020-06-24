@@ -18,14 +18,11 @@ passport.use(new LocalStrategy(  (username, password, done) => {
 }));
 
 passport.serializeUser((user, cb) => {
-  console.log({user})
   cb(null, user.id)
 })
 
 passport.deserializeUser((id, cb) => {
-  console.log({id})
   User.findById(id, (err, user) => {
-    console.log({user})
     if (err) return cb(err)
     return cb(null, user)
   })
