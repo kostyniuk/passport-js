@@ -1,5 +1,5 @@
 const express = require('express');
-const mongoose = require('mongoose')
+const passport = require('passport')
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const app = express();
@@ -8,11 +8,11 @@ require('dotenv').config()
 const bodyParser = require('body-parser')
 const connection = require('./config/db');
 
-const addUserRoute = require('./routes/signUp');
+const signupRoute = require('./routes/signup');
+const loginRoute= require('./routes/login');
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
 
 const sessionStore = new MongoStore({
   mongooseConnection: connection,
@@ -29,14 +29,19 @@ app.use(
   })
 );
 
+require('./config/passport');
+app.use(passport.initialize());
+app.use(passport.session());
 app.use((req,res, next) => {
-  console.log(2)
+  console.log(req.session)
+  console.log(req.user)
   next()
 })
 
 const PORT = process.env.PORT || 8000
 
-app.use('/signup', addUserRoute)
+app.use('/signup', signupRoute)
+app.use('/login', loginRoute)
 
 app.get('/', (req, res, next) => {
   res.json('home page')

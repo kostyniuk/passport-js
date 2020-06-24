@@ -22,8 +22,6 @@ router.post('/', async (req, res, next) => {
 
     const user = new User(data);
 
-    console.log({ user });
-
     await user.save();
     res.json(user);
   } catch (e) {
