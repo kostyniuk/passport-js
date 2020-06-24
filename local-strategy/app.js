@@ -1,23 +1,24 @@
 const express = require('express');
-const passport = require('passport')
+const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const app = express();
 
-require('dotenv').config()
-const bodyParser = require('body-parser')
+require('dotenv').config();
+const bodyParser = require('body-parser');
 const connection = require('./config/db');
 
 const signupRoute = require('./routes/signup');
-const loginRoute= require('./routes/login');
+const loginRoute = require('./routes/login');
+const protectedRoute = require('./routes/protected');
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const sessionStore = new MongoStore({
   mongooseConnection: connection,
-  collection: 'sessions'
-})
+  collection: 'sessions',
+});
 
 app.use(
   session({
@@ -34,22 +35,22 @@ require('./config/passport');
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req,res, next) => {
-  console.log(req.session)
-  console.log(req.user)
-  next()
-})
+app.use((req, res, next) => {
+  console.log(req.session);
+  console.log(req.user);
+  next();
+});
 
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 8000;
 
-app.use('/signup', signupRoute)
-app.use('/login', loginRoute)
+app.use('/signup', signupRoute);
+app.use('/login', loginRoute);
+app.use('/protected', protectedRoute);
 
 app.get('/', (req, res, next) => {
-  res.json('home page')
-})
-
+  res.json('home page');
+});
 
 app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`)
-})
+  console.log(`Server is running at http://localhost:${PORT}`);
+});
