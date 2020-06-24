@@ -2,9 +2,9 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 
-router.get('/', (req,res, next) => {
-  res.send('Log in page')
-})
+router.get('/', (req, res, next) => {
+  res.send('Login page');
+});
 
 router.post(
   '/',
@@ -22,7 +22,6 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/login');
 });
 router.get('/success', (req, res, next) => {
-  console.log(req.session);
   res.send('You successfully logged in.');
 });
 router.get('/failure', (req, res, next) => {
