@@ -2,14 +2,11 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
-const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.zirup.mongodb.net/test?retryWrites=true&w=majority`;
+const conn = process.env.DB_STRING;
 
-const connectDb = async () => {
-  await mongoose.connect(uri, {
+const connection = mongoose.createConnection(conn, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  console.log('connected')
-};
+    useUnifiedTopology: true
+});
 
-module.exports = connectDb;
+module.exports = connection;
