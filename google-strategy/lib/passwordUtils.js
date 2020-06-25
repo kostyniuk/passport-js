@@ -2,7 +2,7 @@
 
 const bcrypt = require('bcryptjs');
 
-const genPassword = async (password, saltNumber) => {
+const genPassword = async (password, saltNumber = 12) => {
 
   const hash = await bcrypt.hash(password, Number(saltNumber));
   return hash;

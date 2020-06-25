@@ -3,6 +3,7 @@ const connection = require('../config/db');
 
 const UserSchema = mongoose.Schema({
   username: String,
+  password: String,
   provider: String,
   providerId: String,
   fullName: String,
@@ -10,4 +11,4 @@ const UserSchema = mongoose.Schema({
   picture: String,
 });
 
-connection.model('UserGoogle', UserSchema);
+module.exports = connection.model('UserGoogle', UserSchema);
