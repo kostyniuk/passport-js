@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 8000;
 require('./config/db');
 require('./models/UserGoogle');
 
-require('./config/passport');
+require('./config/passport')(passport);
 app.use(passport.initialize());
 
 app.use(express.urlencoded({ extended: false }));
