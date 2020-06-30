@@ -1,10 +1,10 @@
 const express = require('express');
-
 const router = express.Router();
+const mongoose = require('mongoose');
+
+const UserGoogle = mongoose.model('UserGoogle')
 
 const { genPassword } = require('../lib/passwordUtils');
-
-const UserGoogle = require('../models/UserGoogle');
 
 router.post('/', async (req, res, next) => {
   try {
@@ -14,15 +14,13 @@ router.post('/', async (req, res, next) => {
 
     const data = {
       username,
-      password,
+      password: hash,
       fullName,
       email,
       picture
     };
 
     const user = new UserGoogle(data);
-
-    console.log({user})
 
     await user.save();
     res.json(user);
