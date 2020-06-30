@@ -8,15 +8,21 @@ router.get('/', (req, res, next) => {
 
 router.get(
   '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+    session: false,
+  })
 );
 
 router.get(
   '/google/callback',
   passport.authenticate('google', {
     failureRedirect: '/login',
-    successRedirect: '/protected',
-  })
+  }),
+  (req, res) => {
+    console.log('Redirected', req.user);
+    res.json({status: 'success', user: req.user})
+  }
 );
 
 module.exports = router;
