@@ -14,6 +14,7 @@ const pathToKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
 const PUB_KEY = fs.readFileSync(pathToKey, 'utf8');
 
 // At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
+
 const opts = {
   jwtFromRequest: ExtractJwt.fromHeader('jwt'),
   secretOrKey: PUB_KEY,
@@ -22,20 +23,20 @@ const opts = {
 
 module.exports = (passport) => {
   passport.use(
-    new JwtStrategy(opts, function (jwt_payload, done) {
+    new JwtStrategy(opts, async (jwt_payload, done) => {
       console.log({ jwt_payload });
 
-      // User.findOne({ id: jwt_payload.sub }, function (err, user) {
-      //   if (err) {
-      //     return done(err, false);
-      //   }
-      //   if (user) {
-      //     return done(null, user);
-      //   } else {
-      //     return done(null, false);
-      //     // or you could create a new account
-      //   }
-      // });
+      try {
+        const user = await GoogleUser.findById(jwt_payload.sub);
+        if (user) {
+          return done(null, user);
+        } else {
+          return done(null, false);
+        }
+      } catch (e) {
+        return done(err, false);
+      }
+      // or you could create a new account
     })
   );
 
