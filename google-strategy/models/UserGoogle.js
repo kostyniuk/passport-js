@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const connection = require('../config/db');
 
 const UserSchema = mongoose.Schema({
   username: String,
@@ -11,4 +10,4 @@ const UserSchema = mongoose.Schema({
   picture: String,
 });
 
-module.exports = connection.model('UserGoogle', UserSchema);
+mongoose.model('UserGoogle', UserSchema);
