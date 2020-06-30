@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const UserGoogle = mongoose.model('UserGoogle');
 const { validPassword } = require('../lib/passwordUtils');
+const issueJWT = require('../lib/issueJwt');
 
 router.post('/', async (req, res, next) => {
   const { username, password } = req.body;
@@ -20,9 +21,9 @@ router.post('/', async (req, res, next) => {
     if (isValidPassword) {
       // const tokenObject = utils.issueJWT(user);
 
-      res.status(200).json({ message: 'Successfully logged in' });
-
-      // res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
+      const token = issueJWT(user);
+      res.cookie('jwt', token, { httpOnly: true });
+      res.status(200).json({ success: true, token, expiresIn: token.expires });
     } else {
       res
         .status(401)
@@ -31,9 +32,6 @@ router.post('/', async (req, res, next) => {
   } catch (e) {
     console.error(e);
   }
-
-  const token = jwt.sign({ user: 'johndoe' }, 'secret');
-  res.cookie('jwt', token, { httpOnly: true });
 });
 
 router.get(
