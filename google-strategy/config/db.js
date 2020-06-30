@@ -2,11 +2,20 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
-const conn = process.env.DB_STRING;
+const devConnection = process.env.DB_STRING;
+const prodConnection = process.env.DB_STRING_PROD;
 
-const connection = mongoose.createConnection(conn, {
+if (process.env.NODE_ENV === 'production') {
+  mongoose.connect(prodConnection, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+  });
+} else {
+  mongoose.connect(devConnection, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+}
+mongoose.connection.on('connected', () => {
+  console.log(`Database connected in ${process.env.NODE_ENV} mode.`);
 });
-
-module.exports = connection;
