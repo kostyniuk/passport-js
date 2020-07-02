@@ -22,7 +22,7 @@ router.post('/', async (req, res, next) => {
       // const tokenObject = utils.issueJWT(user);
 
       const token = issueJWT(user);
-      res.cookie('jwt', token, { httpOnly: true });
+      // res.cookie('jwt', token, { httpOnly: true });
       res.status(200).json({ success: true, token, expiresIn: token.expires });
     } else {
       res
@@ -49,7 +49,10 @@ router.get(
   }),
   (req, res) => {
     console.log('Redirected', req.user);
-    res.redirect('/protected');
+    const token = issueJWT(req.user);
+    console.log({ token });
+    res.json({ token: 'Bearer ' + token.token });
+    // res.redirect('/');
   }
 );
 
