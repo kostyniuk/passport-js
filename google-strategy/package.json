@@ -17,7 +17,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "nodemon app.js"
+    "server": "nodemon app.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \" npm run server \" \" npm run client\""
   },
   "keywords": [],
   "author": "",
