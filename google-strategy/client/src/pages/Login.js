@@ -3,12 +3,16 @@ import { TextField, Button, Grid } from '@material-ui/core';
 import styles from './../styles/login.module.css';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import MailIcon from '@material-ui/icons/Mail';
+import useFetch from '../hooks/useFetch';
 
 const Login = () => {
   const [form, setForm] = useState({username: '', password: ''});
+  const {error, loading, request } = useFetch()
+
+console.log({error, loading, request})
 
   const handleForm = (e) => {
-    console.log(e.target.value);
+    request('dsa', 'sad')
   };
 
   const handleChange = (e) => {
@@ -21,7 +25,7 @@ const Login = () => {
       <h1>Login</h1>
       <Grid container direction='row' justify='center' alignItems='center'>
         <TwitterIcon onClick={() => {console.log('twitter')}}/>
-        <MailIcon />
+        <MailIcon className={styles.icons} />
       </Grid>
       <h4>or</h4>
       <form
