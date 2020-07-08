@@ -5,11 +5,11 @@ const loginRoute = require('./login');
 const signupRoute = require('./signup');
 const protectedRoute = require('./protected');
 
-router.use('/login', loginRoute);
-router.use('/signup', signupRoute);
-router.use('/protected', protectedRoute);
+router.use('/api/login', loginRoute);
+router.use('/api/signup', signupRoute);
+router.use('/api/protected', protectedRoute);
 
-router.use('/', (req, res) => {
+router.use('/api', (req, res) => {
   res.json('Home page');
 });
 module.exports = router;
