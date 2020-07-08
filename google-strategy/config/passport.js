@@ -15,8 +15,17 @@ const PUB_KEY = fs.readFileSync(pathToKey, 'utf8');
 
 // At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
 
+const cookieExtractor = function(req) {
+  var token = null;
+  if (req && req.cookies)
+  {
+      token = req.cookies['jwt'].token;
+  }
+  return token;
+};
+
 const opts = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: cookieExtractor,
   secretOrKey: PUB_KEY,
   algorithms: ['RS256'],
 };
@@ -46,7 +55,7 @@ module.exports = (passport) => {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         // callbackURL: `http://localhost:${process.env.PORT}/login/google/callback`,
-        callbackURL: '/login/google/callback',
+        callbackURL: '/api/login/google/callback',
       },
       async (accessToken, refreshToken, profile, done) => {
         const data = parseProfile(profile);
