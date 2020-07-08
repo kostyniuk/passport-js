@@ -45,14 +45,15 @@ router.get(
 router.get(
   '/google/callback',
   passport.authenticate('google', {
-    failureRedirect: '/login',
+    failureRedirect: '/api/login',
   }),
   (req, res) => {
     console.log('Redirected', req.user);
     const token = issueJWT(req.user);
     console.log({ token });
-    res.json({ token: 'Bearer ' + token.token });
-    // res.redirect('/');
+    res.cookie('jwt', token, {httpOnly: true})
+    // res.json({ token: 'Bearer ' + token.token });
+    res.redirect('/api/protected');
   }
 );
 
