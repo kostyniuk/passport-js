@@ -10,10 +10,14 @@ const issueJWT = require('../lib/issueJwt');
 router.post('/', async (req, res, next) => {
   const { username, password } = req.body;
 
+  console.log(req.body)
+
   try {
     const user = await UserGoogle.findOne({ username });
+    console.log({user})
+    console.log()
     if (!user) {
-      res.status(401).json({ success: false, msg: 'could not find user' });
+      return res.status(401).json({ success: false, msg: 'could not find user' });
     }
 
     const isValidPassword = await validPassword(password, user.password);
@@ -23,7 +27,7 @@ router.post('/', async (req, res, next) => {
 
       const token = issueJWT(user);
       // res.cookie('jwt', token, { httpOnly: true });
-      res.status(200).json({ success: true, token, expiresIn: token.expires });
+      return res.status(200).json({ success: true, token, expiresIn: token.expires });
     } else {
       res
         .status(401)
