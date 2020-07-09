@@ -26,7 +26,7 @@ router.post('/', async (req, res, next) => {
       // const tokenObject = utils.issueJWT(user);
 
       const token = issueJWT(user);
-      // res.cookie('jwt', token, { httpOnly: true });
+      res.cookie('jwt', token, { httpOnly: true });
       return res.status(200).json({ success: true, token, expiresIn: token.expires });
     } else {
       res
