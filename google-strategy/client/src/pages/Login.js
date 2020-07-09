@@ -11,8 +11,17 @@ const Login = () => {
 
 console.log({error, loading, request})
 
+
   const handleForm = (e) => {
-    request('dsa', 'sad')
+    console.log({form})
+    const params = {
+      method: 'POST',
+      body: JSON.stringify(form),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    request('api/login', params)
   };
 
   const handleChange = (e) => {
