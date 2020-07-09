@@ -1,16 +1,25 @@
 import { useState } from 'react';
 
 const useFetch = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const request = async (url, params) => {
+  const request = async (
+    url,
+    params = { method: 'GET', body: 'null', headers: {} }
+  ) => {
     try {
-      const uri = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
-      const responce = await fetch(uri);
+      console.log({ url, params });
+
+      setLoading(true);
+
+      // const responce = await fetch(url, params);
+      // const responce = await fetch('/api');
+      const responce = await fetch(url, params);
+      console.log({ responce });
       const json = await responce.json();
 
-      console.log({json})
+      console.log({ json });
 
       if (json.success) {
         return json;
@@ -19,6 +28,7 @@ const useFetch = () => {
         setError(json.msg);
       }
     } catch (e) {
+      console.log(e);
       setLoading(false);
       setError(e);
     }
