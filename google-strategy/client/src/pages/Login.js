@@ -13,7 +13,6 @@ console.log({error, loading, request})
 
 
   const handleForm = (e) => {
-    console.log({form})
     const params = {
       method: 'POST',
       body: JSON.stringify(form),
