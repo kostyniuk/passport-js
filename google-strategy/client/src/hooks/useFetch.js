@@ -1,38 +1,28 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const useFetch = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const request = async (
-    url,
-    params = { method: 'GET', body: 'null', headers: {} }
-  ) => {
+  const request = useCallback(async (url, params = { method: 'GET' }) => {
     try {
-      console.log({ url, params });
-
       setLoading(true);
 
-      // const responce = await fetch(url, params);
-      // const responce = await fetch('/api');
       const responce = await fetch(url, params);
-      console.log({ responce });
       const json = await responce.json();
 
-      console.log({ json });
+      setLoading(false);
 
-      if (json.success) {
-        return json;
-      } else {
-        setLoading(false);
+      if (!json.success) {
         setError(json.msg);
       }
+      return json;
     } catch (e) {
       console.log(e);
       setLoading(false);
       setError(e);
     }
-  };
+  }, []);
 
   return { loading, error, request };
 };
