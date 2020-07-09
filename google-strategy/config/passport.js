@@ -15,11 +15,10 @@ const PUB_KEY = fs.readFileSync(pathToKey, 'utf8');
 
 // At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
 
-const cookieExtractor = function(req) {
+const cookieExtractor = function (req) {
   var token = null;
-  if (req && req.cookies)
-  {
-      token = req.cookies['jwt'].token;
+  if (req && Object.keys(req.cookies).length) {
+    token = req.cookies['jwt'].token;
   }
   return token;
 };
