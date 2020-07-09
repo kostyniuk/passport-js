@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-
+const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
@@ -14,7 +14,7 @@ require('./models/UserGoogle');
 
 require('./config/passport')(passport);
 app.use(passport.initialize());
-
+app.use(morgan('tiny'));
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
