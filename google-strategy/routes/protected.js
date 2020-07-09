@@ -7,6 +7,7 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   (req, res, next) => {
     res.json({ user: req.user });
+
     //   const token = jsonwebtoken.sign({ user: 'johndoe' }, jwtSecret);
     // res.cookie('token', token, { httpOnly: true });
   }

@@ -10,6 +10,7 @@ import {
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Content from './pages/Content';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Switch>
           <Route path='/' exact>
             <div>
-              <h1>Home</h1>
+              <Home />
             </div>
           </Route>
           <Route path='/login' exact>
