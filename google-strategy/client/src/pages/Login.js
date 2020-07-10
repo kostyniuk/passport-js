@@ -9,10 +9,7 @@ const Login = () => {
   const [form, setForm] = useState({username: '', password: ''});
   const {error, loading, request } = useFetch()
 
-console.log({error, loading, request})
-
-
-  const handleForm = (e) => {
+  const handleForm = async (e) => {
     const params = {
       method: 'POST',
       body: JSON.stringify(form),
@@ -20,7 +17,12 @@ console.log({error, loading, request})
         'Content-Type': 'application/json'
       }
     }
-    request('api/login', params)
+    const loginResponce = await request('api/login', params)
+
+    if (loginResponce.success) {
+      window.location.reload(true);
+    }
+
   };
 
   const handleChange = (e) => {

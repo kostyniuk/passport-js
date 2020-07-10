@@ -7,7 +7,7 @@ const Home = () => {
   console.log({ info });
   if (loading) {
     return <CircularProgress />;
-  }
+  } 
 
   return (
     <div>
