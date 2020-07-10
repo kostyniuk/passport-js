@@ -8,6 +8,7 @@ const useAuth = () => {
     isAuthenticated: false,
     id: null,
     username: '',
+    ready: false
   });
 
   const { error, loading, request } = useFetch();
@@ -23,6 +24,12 @@ const useAuth = () => {
           type: 'fillOut',
           props: { id: responce.data._id, username: responce.data.username },
         });
+      } else {
+        dispatch({
+          type: 'unsuccessful',
+          props: { id: info.id, username: info.username },
+
+        });
       }
     } catch (e) {
       console.log(e);
@@ -33,7 +40,7 @@ const useAuth = () => {
     fetchUser();
   }, [fetchUser]);
 
-  return { info, loading };
+  return { info };
 };
 
 export default useAuth;

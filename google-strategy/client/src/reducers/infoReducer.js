@@ -7,9 +7,10 @@ export default (state, action) => {
         isAuthenticated: true,
         id,
         username,
+        ready: true,
       };
     default: {
-      return state;
+      return { ...state, ready: true };
     }
   }
 };
