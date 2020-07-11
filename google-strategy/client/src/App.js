@@ -33,7 +33,6 @@ function App() {
                     <Home />
                   </div>
                 </Route>
-
                 <Route path='/content' exact>
                   <Content />
                 </Route>
