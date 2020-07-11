@@ -53,7 +53,7 @@ router.get(
     const token = issueJWT(req.user);
     console.log({ token });
     res.cookie('jwt', token, { httpOnly: true });
-    res.redirect('/api/protected');
+    res.redirect('/login');
   }
 );
 
